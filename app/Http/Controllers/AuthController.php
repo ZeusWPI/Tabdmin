@@ -26,6 +26,8 @@ class AuthController extends Controller
                 ]
             );
 
+            // TODO: update admin status on login.
+
             Auth::guard('web')->login($user);
 
             return redirect('/');
