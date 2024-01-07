@@ -4,5 +4,8 @@
 // Variables
 @import 'variables';
 
-// Bootstrap
-@import 'bootstrap/scss/bootstrap';
+@import "../css/app.css";
+
+// Font Awesome
+$fa-font-path: "../webfonts";
+@import '@fortawesome/fontawesome-free/css/all.min.css';
