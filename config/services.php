@@ -31,4 +31,11 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'zauth' => [
+        'base_uri' => env('ZAUTH_BASE_URI'),
+        'client_id' => env('ZAUTH_CLIENT_ID'),
+        'client_secret' => env('ZAUTH_CLIENT_SECRET'),
+        'redirect' => env('ZAUTH_REDIRECT_URI'),
+    ],
+
 ];
