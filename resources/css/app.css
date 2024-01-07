@@ -1,3 +1,19 @@
 .link-zeus {
     color: #ff7f00 !important;
 }
+.footer-link:hover {
+    text-decoration: underline;
+}
+.btn-zeus {
+    background-color: #ff7f00 !important;
+    border-color: transparent;
+    color: #fff !important;
+}
+.btn-zeus:hover {
+    background-color: #f27900 !important;
+    border-color: transparent !important;
+    color: #fff !important;
+}
+.brand-text-right {
+    margin-left: -0.9ch;
+}

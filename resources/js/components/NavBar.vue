@@ -6,7 +6,7 @@
         class="d-flex justify-content-between"
     >
         <MDBNavbarBrand>
-            <a :href="welcome" style="color: unset;"><span>Tab</span><span style="margin-left: -10px;">dmin</span></a>
+            <a :href="welcome" style="color: unset;"><span>Tab</span><span class="brand-text-right">dmin</span></a>
         </MDBNavbarBrand>
         <MDBNavbarToggler
             target="#navbarColor01"
