@@ -8,6 +8,7 @@ import './bootstrap';
 import { createApp } from 'vue';
 
 import 'mdb-vue-ui-kit/css/mdb.min.css';
+import ToastPlugin from 'vue-toast-notification';
 
 /**
  * Next, we will create a fresh Vue application instance. You may then begin
@@ -27,6 +28,13 @@ const app = createApp({});
 
 Object.entries(import.meta.glob('./**/*.vue', { eager: true })).forEach(([path, definition]) => {
     app.component(path.split('/').pop().replace(/\.\w+$/, ''), definition.default);
+});
+
+/**
+ * vue-toast-notification
+ */
+app.use(ToastPlugin, {
+    duration: 10000,
 });
 
 /**

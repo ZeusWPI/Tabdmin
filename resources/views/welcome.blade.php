@@ -11,7 +11,7 @@
                 @endif
                 <h1><span>Tab</span><span class="brand-text-right">dmin</span></h1>
                 <br>
-                <p>Yes we have to drink. Yes we have to pay. But we also have to put money on our <a
+                <p>Yes. We have to drink. Yes. We have to pay. But we also have to put money on our <a
                         href="https://tab.zeus.gent">Tab</a>.</p>
                 <p>This makes everyone's life, especially that of the treasurer, easier by automatically handling
                     transactions to Zeus.</p>

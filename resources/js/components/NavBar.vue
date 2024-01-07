@@ -14,10 +14,12 @@
         ></MDBNavbarToggler>
         <MDBCollapse id="navbarColor01" v-model="collapse7">
             <MDBNavbarNav class="mb-2 mb-lg-0">
-                <MDBNavbarItem :href="home" v-if="!guest" :linkClass="url === home ? 'link-zeus' : ''"
-                >Dashboard
-                </MDBNavbarItem
-                >
+                <MDBNavbarItem :href="home" v-if="!guest" :linkClass="url === home ? 'link-zeus' : ''">
+                    Dashboard
+                </MDBNavbarItem>
+                <MDBNavbarItem :href="transactions" v-if="!guest" :linkClass="url === transactions ? 'link-zeus' : ''">
+                    Transactions
+                </MDBNavbarItem>
             </MDBNavbarNav>
 
             <MDBNavbarNav class="mb-2 mb-lg-0 d-flex justify-content-end" style="margin-right: unset !important;">
@@ -86,6 +88,7 @@ export default {
         'url',
         'welcome',
         'home',
+        'transactions',
     ],
     data() {
         return {

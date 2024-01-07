@@ -9,3 +9,6 @@
 // Font Awesome
 $fa-font-path: "../webfonts";
 @import '@fortawesome/fontawesome-free/css/all.min.css';
+
+// Vue Toast Notification
+@import 'vue-toast-notification/dist/theme-bootstrap.css';
