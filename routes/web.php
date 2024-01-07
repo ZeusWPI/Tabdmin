@@ -22,4 +22,4 @@ Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::get('/auth/callback', [AuthController::class, 'callback'])->name('loginCallback');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::get('/home', [HomeController::class, 'index'])->name('home')->middleware('auth');
+Route::get('/home', [HomeController::class, 'index'])->name('home')->middleware(['auth', 'admin']);

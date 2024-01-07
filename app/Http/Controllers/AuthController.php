@@ -37,9 +37,9 @@ class AuthController extends Controller
 
             Auth::guard('web')->login($user);
 
-            return redirect('/');
+            return redirect(route('home'));
         } catch (Exception $e) {
-            return redirect(route('login'));
+            return redirect()->route('welcome')->with('error', 'Something went wrong while logging in. Please try again or contact an administrator.');
         }
     }
 
