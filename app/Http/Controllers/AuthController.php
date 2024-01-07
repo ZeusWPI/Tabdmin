@@ -26,10 +26,14 @@ class AuthController extends Controller
                 [
                     'id' => $zauthUser->getId(),
                     'name' => $zauthUser->getName(),
+                    'admin' => $zauthUser['admin'],
                 ]
             );
 
-            // TODO: update admin status on login.
+            if ($user->admin != $zauthUser['admin']) {
+                $user->admin = $zauthUser['admin'];
+                $user->save();
+            }
 
             Auth::guard('web')->login($user);
 

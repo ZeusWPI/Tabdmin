@@ -46,7 +46,7 @@ class ZauthProvider extends AbstractProvider
         return (new User())->setRaw($user)->map([
             'id' => $user['id'],
             'name' => $user['username'],
-            // TODO 'admin' => $user['admin'],
+            'admin' => $user['admin'],
         ]);
     }
 }
