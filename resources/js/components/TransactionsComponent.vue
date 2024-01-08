@@ -5,7 +5,7 @@
             <form @submit.prevent="submitTransaction">
                 <MDBRow class="mb-3">
                     <MDBCol md="6">
-                        <MDBInput type="number" label="Amount" id="amount" v-model="form.amount" required/>
+                        <MDBInput type="number" step=".01" label="Amount" id="amount" v-model="form.amount" required/>
                     </MDBCol>
                     <MDBCol md="6">
                         <MDBCheckbox label="Cash" id="cash" v-model="form.cash"/>
@@ -97,8 +97,8 @@ export default {
             transactions: this.transactionsProp,
             form: {
                 amount: 0,
-                debtor: '',
-                creditor: 'zeus',
+                debtor: 'zeus',
+                creditor: '',
                 cash: false,
             }
         }

@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Services\NordigenService;
+use App\Services\TabService;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Socialite\Contracts\Factory;
 
@@ -15,6 +16,9 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(NordigenService::class, function ($app) {
             return new NordigenService(env('GOCARDLESS_SECRET_ID'), env('GOCARDLESS_SECRET_KEY'));
+        });
+        $this->app->bind(TabService::class, function ($app) {
+            return new TabService(env('TAB_BASE_URI'), env('TAB_ACCESS_TOKEN'));
         });
     }
 

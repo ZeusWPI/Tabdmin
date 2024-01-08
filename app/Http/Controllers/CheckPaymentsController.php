@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Transaction;
 use App\Services\NordigenService;
+use App\Services\TabService;
+use Carbon\Carbon;
 use Nordigen\NordigenPHP\Enums\AccountProcessingStatus;
 
 class CheckPaymentsController extends Controller
@@ -11,7 +13,7 @@ class CheckPaymentsController extends Controller
     /**
      * Handle the incoming request.
      */
-    public function __invoke(NordigenService $nordigenService)
+    public function __invoke(NordigenService $nordigenService, TabService $tabService)
     {
         $accounts = $nordigenService->getListOfAccounts();
 
@@ -44,9 +46,7 @@ class CheckPaymentsController extends Controller
                                 ]);
                             } else {
                                 // The transaction was not manually added, so we want to create a new transaction and process it to Tab.
-
-                                // TODO: Process the transaction to Tab.
-                                $successfullyProcessedToTab = false;
+                                $successfullyProcessedToTab = $tabService->createTransaction('zeus', $username, $bankTransaction["transactionAmount"]["amount"]);
 
                                 // Create the transaction.
                                 Transaction::create([
@@ -56,10 +56,10 @@ class CheckPaymentsController extends Controller
                                     'amount' => $bankTransaction["transactionAmount"]["amount"],
                                     'currency' => $bankTransaction["transactionAmount"]["currency"],
                                     'cash' => false,
-                                    'debtor' => $username,
-                                    'creditor' => 'zeus',
+                                    'debtor' => 'zeus',
+                                    'creditor' => $username,
                                     'issuer' => 'Tabdmin',
-                                    'executed' => $successfullyProcessedToTab,
+                                    'executed' => $successfullyProcessedToTab ? Carbon::now() : null,
                                 ]);
                             }
                         }

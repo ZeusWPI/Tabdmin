@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Transaction;
+use App\Services\TabService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -32,7 +34,7 @@ class TransactionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, TabService $tabService)
     {
         $request->validate([
             'amount' => 'required|decimal:0,2',
@@ -41,7 +43,14 @@ class TransactionController extends Controller
             'creditor' => 'required|string',
         ]);
 
-        // TODO: send request to Tab.
+        $successfullyProcessedToTab = $tabService->createTransaction($request->input('debtor'), $request->input('creditor'), $request->input('amount'));
+
+        if (!$successfullyProcessedToTab) {
+            return response()->json([
+                'status_code' => Response::HTTP_BAD_REQUEST,
+                'message' => 'Failed to process transaction to Tab. Check username and try again.',
+            ], Response::HTTP_BAD_REQUEST);
+        }
 
         $transaction = Transaction::create([
             'amount' => $request->input('amount'),
@@ -49,6 +58,7 @@ class TransactionController extends Controller
             'debtor' => $request->input('debtor'),
             'creditor' => $request->input('creditor'),
             'issuer' => Auth::user()->name,
+            'executed' => Carbon::now(),
         ]);
 
         return response()->json([
