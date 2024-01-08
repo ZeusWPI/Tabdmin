@@ -23,7 +23,7 @@
 
     @include('parts.header')
 
-    <main class="py-4">
+    <main class="py-4 mb-8">
         @yield('content')
     </main>
 
