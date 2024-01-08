@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Services\NordigenService;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Socialite\Contracts\Factory;
 
@@ -12,7 +13,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->bind(NordigenService::class, function ($app) {
+            return new NordigenService(env('GOCARDLESS_SECRET_ID'), env('GOCARDLESS_SECRET_KEY'));
+        });
     }
 
     /**

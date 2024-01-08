@@ -20,6 +20,9 @@
                 <MDBNavbarItem :href="transactions" v-if="!guest" :linkClass="url === transactions ? 'link-zeus' : ''">
                     Transactions
                 </MDBNavbarItem>
+                <MDBNavbarItem :href="bankAccounts" v-if="!guest" :linkClass="url === bankAccounts ? 'link-zeus' : ''">
+                    Bank Accounts
+                </MDBNavbarItem>
             </MDBNavbarNav>
 
             <MDBNavbarNav class="mb-2 mb-lg-0 d-flex justify-content-end" style="margin-right: unset !important;">
@@ -89,6 +92,7 @@ export default {
         'welcome',
         'home',
         'transactions',
+        'bankAccounts',
     ],
     data() {
         return {
