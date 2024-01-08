@@ -19,6 +19,11 @@
                         <MDBInput type="text" label="Creditor" id="creditor" v-model="form.creditor" required/>
                     </MDBCol>
                 </MDBRow>
+                <MDBRow class="mb-3">
+                    <MDBCol md="12">
+                        <MDBInput type="text" label="Message" id="message" v-model="form.message" required/>
+                    </MDBCol>
+                </MDBRow>
                 <MDBBtn color="secondary" block type="submit" id="submitBtn">
                     Opslaan
                 </MDBBtn>
@@ -100,6 +105,7 @@ export default {
                 debtor: 'zeus',
                 creditor: '',
                 cash: false,
+                message: 'Tab opladen',
             }
         }
     },
@@ -108,6 +114,9 @@ export default {
             return moment(new Date(date)).format('DD/MM/YYYY HH:mm');
         },
         async submitTransaction() {
+            // Disable the submit button to prevent double submissions
+            document.getElementById('submitBtn').disabled = true;
+
             this.$toast.info('The transaction is being processed...');
 
             const headers = {'Content-Type': 'application/json', 'Accept': 'application/json'};
@@ -118,6 +127,13 @@ export default {
             if (response.status === 201) {
                 this.transactions.push(response.data.transaction);
                 this.$toast.success('The transaction has been processed successfully.');
+
+                // Reset the form
+                this.form.amount = 0;
+                this.form.debtor = 'zeus';
+                this.form.creditor = '';
+                this.form.cash = false;
+                this.form.message = 'Tab opladen';
             } else {
                 if (response?.data?.errors) {
                     for (const error of Object.values(response.data.errors)) {
@@ -129,6 +145,9 @@ export default {
                     this.$toast.error('Something went wrong while processing the transaction.');
                 }
             }
+
+            // Enable the submit button
+            document.getElementById('submitBtn').disabled = false;
         },
     }
 }

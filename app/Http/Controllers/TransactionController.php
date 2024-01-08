@@ -41,9 +41,10 @@ class TransactionController extends Controller
             'cash' => 'required|boolean',
             'debtor' => 'required|string',
             'creditor' => 'required|string',
+            'message' => 'required|string',
         ]);
 
-        $successfullyProcessedToTab = $tabService->createTransaction($request->input('debtor'), $request->input('creditor'), $request->input('amount'));
+        $successfullyProcessedToTab = $tabService->createTransaction($request->input('debtor'), $request->input('creditor'), $request->input('amount'), $request->input('message'));
 
         if (!$successfullyProcessedToTab) {
             return response()->json([
