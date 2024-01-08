@@ -25,7 +25,7 @@
                     </MDBCol>
                 </MDBRow>
                 <MDBBtn color="secondary" block type="submit" id="submitBtn">
-                    Opslaan
+                    Save
                 </MDBBtn>
             </form>
         </MDBCardBody>
