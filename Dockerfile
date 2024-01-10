@@ -22,8 +22,7 @@ RUN apt-get update && apt-get install -y \
     git \
     curl \
     software-properties-common \
-    npm \
-    cron
+    npm
 
 # Install npm
 RUN npm install npm@latest -g && \
@@ -58,18 +57,10 @@ RUN npm install
 RUN npm run build
 RUN rm -rf node_modules/
 
-# Copy the cron file to the container
-COPY cronfile /etc/cron.d/cronfile
-# Give execution rights on the cron job
-RUN chmod 0644 /etc/cron.d/cronfile
-
 # Change current user to www
 USER www
-
-# Apply the cron job
-RUN crontab /etc/cron.d/cronfile
 
 
 # Expose port 9000 and start php-fpm server
 EXPOSE 9000
-CMD php-fpm ; cron -f
+CMD php-fpm
