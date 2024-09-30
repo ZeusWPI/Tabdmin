@@ -35,7 +35,7 @@ return [
         'base_uri' => env('ZAUTH_BASE_URI'),
         'client_id' => env('ZAUTH_CLIENT_ID'),
         'client_secret' => env('ZAUTH_CLIENT_SECRET'),
-        'redirect' => route('loginCallback'),
+        'redirect' => env('ZAUTH_CALLBACK'),
     ],
 
 ];
