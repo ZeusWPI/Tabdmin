@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class TabService
 {
@@ -25,6 +26,10 @@ class TabService
                 'message' => $message,
             ],
         ]);
+
+        if (!$response->successful()) {
+            Log::error('Could not create transaction. Response from Tab: ' . $response->json());
+        }
 
         return $response->successful();
     }
