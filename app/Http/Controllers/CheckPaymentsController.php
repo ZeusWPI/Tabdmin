@@ -32,7 +32,7 @@ class CheckPaymentsController extends Controller
                     // Check if the transaction is one with TAB followed by username.
                     $valueToMatch = array_key_exists("additionalInformation", $bankTransaction) ? $bankTransaction["additionalInformation"] : $bankTransaction["remittanceInformationUnstructured"];
                     if ($valueToMatch && preg_match('/tab\s+([-\w]+)/', strtolower($valueToMatch), $matches)) {
-                        $username = $matches[0];
+                        $username = $matches[1];
                         // Check if the transaction is already in the database.
                         // If it is, we don't want to process it again.
                         if (!Transaction::where('transaction_id', $bankTransaction["transactionId"])->exists()) {
