@@ -17,11 +17,18 @@ class CheckPaymentsController extends Controller
     {
         $accounts = $nordigenService->getListOfAccounts();
 
+        $transactionsStartDate = Carbon::parse(env('TRANSACTIONS_START_DATE', '2024-01-01'));
+
         foreach ($accounts as $account) {
             $metadata = $account->getAccountMetaData();
             if ($metadata["status"] === AccountProcessingStatus::READY) {
                 $transactions = $account->getAccountTransactions()["transactions"]["booked"];
                 foreach ($transactions as $bankTransaction) {
+                    // Check if the transaction date is after the minimum date we want to process.
+                    if (Carbon::parse($bankTransaction["bookingDate"])->isBefore($transactionsStartDate)) {
+                        continue;
+                    }
+
                     // Check if the transaction is one with TAB followed by username.
                     $valueToMatch = array_key_exists("additionalInformation", $bankTransaction) ? $bankTransaction["additionalInformation"] : $bankTransaction["remittanceInformationUnstructured"];
                     if ($valueToMatch && preg_match('/tab\s+([-\w]+)/', strtolower($valueToMatch), $matches)) {
