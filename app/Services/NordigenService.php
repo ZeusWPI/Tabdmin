@@ -11,7 +11,8 @@ class NordigenService
 
     private NordigenClient $client;
 
-    public function __construct(string $secretId, string $secretKey) {
+    public function __construct(string $secretId, string $secretKey)
+    {
         $this->secretId = $secretId;
         $this->secretKey = $secretKey;
         $this->client = new NordigenClient($secretId, $secretKey);
@@ -39,7 +40,7 @@ class NordigenService
         $requisitions = $this->getListOfRequisitions();
         $accounts = [];
 
-        foreach($requisitions as $requisition) {
+        foreach ($requisitions as $requisition) {
             foreach ($this->getListOfAccountsForRequisition($requisition["id"]) as $accountArray) {
                 $accounts[] = $this->client->account($accountArray);
             }
@@ -52,7 +53,7 @@ class NordigenService
         $accounts = $this->getListOfAccounts();
         $accountMetadata = [];
 
-        foreach($accounts as $account) {
+        foreach ($accounts as $account) {
             $accountMetadata[] = $account->getAccountMetaData();
         }
         return $accountMetadata;
@@ -68,16 +69,37 @@ class NordigenService
         $accountArray = $this->getListOfAccountsForRequisition($requisitionId);
         $accountData = [];
 
-        foreach($accountArray as $id) {
+        foreach ($accountArray as $id) {
             $account = $this->client->account($id);
             $accountData[] = [
-                "metaData"     => $account->getAccountMetaData(),
-                "details"      => $account->getAccountDetails(),
-                "balances"     => $account->getAccountBalances(),
+                "metaData" => $account->getAccountMetaData(),
+                "details" => $account->getAccountDetails(),
+                "balances" => $account->getAccountBalances(),
                 "transactions" => $account->getAccountTransactions()
             ];
         }
         return $accountData;
+    }
+
+    public function deleteAccount(string $accountId): bool
+    {
+        // Get requisition id from the account id.
+        $requisitions = $this->getListOfRequisitions();
+        $requisitionId = null;
+
+        foreach ($requisitions as $requisition) {
+            if (in_array($accountId, $this->getListOfAccountsForRequisition($requisition["id"]))) {
+                $requisitionId = $requisition["id"];
+                break;
+            }
+        }
+
+        if (!$requisitionId) {
+            return false;
+        }
+
+        $this->client->requisition->deleteRequisition($requisitionId);
+        return true;
     }
 
 }

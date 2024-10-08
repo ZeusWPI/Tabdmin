@@ -11,6 +11,7 @@
                         <th>IBAN</th>
                         <th>Connection date</th>
                         <th>Status</th>
+                        <th>Actions</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -19,6 +20,11 @@
                         <td>{{ account.iban }}</td>
                         <td>{{ formatDate(account.created) }}</td>
                         <td>{{ account.status }}</td>
+                        <td>
+                            <MDBBtn color="danger" size="sm" rounded @click="deleteAccount(account)">
+                                <MDBIcon icon="trash"/>
+                            </MDBBtn>
+                        </td>
                     </tr>
                     </tbody>
                 </MDBTable>
@@ -61,10 +67,12 @@ import {
     MDBCardText,
     MDBCardTitle,
     MDBCol,
+    MDBIcon,
     MDBRow,
-    MDBTable
+    MDBTable,
 } from "mdb-vue-ui-kit";
 import moment from "moment";
+import Swal from "sweetalert2";
 
 export default {
     name: "ConnectBankComponent",
@@ -75,19 +83,44 @@ export default {
     },
     components: {
         MDBCardHeader,
-        MDBTable, MDBCol, MDBRow, MDBCardTitle, MDBCardText, MDBCard, MDBCardBody, MDBCardImg, MDBBtn
+        MDBTable, MDBCol, MDBRow, MDBCardTitle, MDBCardText, MDBCard, MDBCardBody, MDBCardImg, MDBBtn, MDBIcon
     },
     props: [
         'banks',
-        'accounts',
+        'accountsProp',
     ],
+    data() {
+        return {
+            accounts: this.accountsProp,
+        }
+    },
     methods: {
         connectBank(bankId) {
             window.location.href = '/bankAccounts/connect/' + bankId;
         },
         formatDate(date) {
             return moment(new Date(date)).format('DD/MM/YYYY HH:mm');
-        }
+        },
+        async deleteAccount(account) {
+            const result = await Swal.fire({
+                title: 'Weet je zeker dat je dit bank account wilt verwijderen?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Ja, verwijder',
+                cancelButtonText: 'Annuleer',
+            });
+            if (result.isConfirmed) {
+                const response = await axios.delete(`/bankAccounts/${account.id}`, {validateStatus: () => true});
+                if (response.status === 200) {
+                    this.accounts = this.accounts.filter(acc => acc.id !== account.id);
+                    this.$toast.success('Het bank account is succesvol verwijderd.');
+                    return true;
+                } else {
+                    this.$toast.error('Er ging iets fout tijdens het verwijderen van het bank account.');
+                    return false;
+                }
+            }
+        },
     }
 }
 </script>

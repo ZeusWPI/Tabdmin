@@ -6,6 +6,7 @@ use App\Mail\ReconnectBankMail;
 use App\Services\NordigenService;
 use Carbon\Carbon;
 use Exception;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Mail;
 use Nordigen\NordigenPHP\Enums\AccountProcessingStatus;
 
@@ -55,9 +56,19 @@ class BankAccountController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(NordigenService $nordigenService, string $id)
     {
-        // DELETE request to on the requisition endpoint.
+        if ($nordigenService->deleteAccount($id)) {
+            return response()->json([
+                'status_code' => Response::HTTP_OK,
+                'message' => 'Account deleted successfully'
+            ], Response::HTTP_OK);
+        } else {
+            return response()->json([
+                'status_code' => Response::HTTP_NOT_FOUND,
+                'message' => 'Account not found with id ' . $id
+            ], Response::HTTP_NOT_FOUND);
+        }
     }
 
     /**
