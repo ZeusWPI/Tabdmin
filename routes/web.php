@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BankAccountController;
+use App\Http\Controllers\CheckPaymentsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\WelcomeController;
@@ -30,6 +31,7 @@ Route::get('/home', [HomeController::class, 'index'])->name('home')->middleware(
 // Transactions
 Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions')->middleware(['auth', 'admin']);
 Route::post('/transactions', [TransactionController::class, 'store'])->middleware(['auth', 'admin']);
+Route::post('/transactions/sync', [CheckPaymentsController::class, '__invoke'])->middleware(['auth', 'admin']);
 
 // BankAccounts
 Route::get('/bankAccounts', [BankAccountController::class, 'index'])->name('bankAccounts')->middleware(['auth', 'admin']);

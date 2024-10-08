@@ -1,4 +1,7 @@
 <template>
+    <div class="d-flex justify-content-end mb-3">
+        <MDBBtn color="zeus" @click="syncBankTransactions" class="">Sync bank transactions</MDBBtn>
+    </div>
     <MDBCard class="mb-3">
         <MDBCardHeader>New transaction</MDBCardHeader>
         <MDBCardBody>
@@ -149,6 +152,16 @@ export default {
             // Enable the submit button
             document.getElementById('submitBtn').disabled = false;
         },
+        async syncBankTransactions() {
+            this.$toast.info('The bank transactions are being synchronized...');
+
+            const response = await axios.post('/transactions/sync', {validateStatus: () => true});
+            if (response.status === 200) {
+                this.$toast.success('The bank transactions have been synchronized successfully.');
+            } else {
+                this.$toast.error('Something went wrong while synchronizing the bank transactions.');
+            }
+        }
     }
 }
 </script>
