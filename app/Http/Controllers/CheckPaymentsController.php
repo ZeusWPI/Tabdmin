@@ -23,7 +23,8 @@ class CheckPaymentsController extends Controller
                 $transactions = $account->getAccountTransactions()["transactions"]["booked"];
                 foreach ($transactions as $bankTransaction) {
                     // Check if the transaction is one with TAB followed by username.
-                    if (array_key_exists("additionalInformation", $bankTransaction) && preg_match('/tab\s+(\w+)/', strtolower($bankTransaction["additionalInformation"]), $matches)) {
+                    $valueToMatch = array_key_exists("additionalInformation", $bankTransaction) ? $bankTransaction["additionalInformation"] : $bankTransaction["remittanceInformationUnstructured"];
+                    if ($valueToMatch && preg_match('/tab\s+([-\w]+)/', strtolower($valueToMatch), $matches)) {
                         $username = $matches[0];
                         // Check if the transaction is already in the database.
                         // If it is, we don't want to process it again.
