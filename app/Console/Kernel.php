@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Http\Controllers\BankAccountController;
 use App\Http\Controllers\CheckPaymentsController;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -14,6 +15,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         $schedule->call(new CheckPaymentsController())->everySixHours();
+        $schedule->call(new BankAccountController())->dailyAt('08:30');
     }
 
     /**

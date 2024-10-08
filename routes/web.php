@@ -34,4 +34,4 @@ Route::post('/transactions', [TransactionController::class, 'store'])->middlewar
 // BankAccounts
 Route::get('/bankAccounts', [BankAccountController::class, 'index'])->name('bankAccounts')->middleware(['auth', 'admin']);
 Route::get('/bankAccounts/connect/callback', [BankAccountController::class, 'callback'])->name('bankConnectCallback')->middleware(['auth', 'admin']);
-Route::get('/bankAccounts/connect/{id}', [BankAccountController::class, 'connect'])->middleware(['auth', 'admin']);
+Route::get('/bankAccounts/connect/{id}', [BankAccountController::class, 'connectBank'])->middleware(['auth', 'admin']);
