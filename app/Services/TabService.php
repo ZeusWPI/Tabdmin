@@ -28,7 +28,13 @@ class TabService
         ]);
 
         if (!$response->successful()) {
-            Log::error('Could not create transaction. Response from Tab: ' . $response->json());
+            try {
+                Log::error('Could not create transaction. Response from Tab:');
+                Log::error($response->json());
+            } catch (\Exception) {
+                Log::error('Could not create transaction. Tab request failed.');
+            }
+
         }
 
         return $response->successful();
