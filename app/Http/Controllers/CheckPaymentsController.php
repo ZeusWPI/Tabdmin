@@ -39,8 +39,8 @@ class CheckPaymentsController extends Controller
                             // If it is, we don't want to process it again.
                             if (!Transaction::where('transaction_id', $bankTransaction["transactionId"])->exists()) {
                                 // If not, check if there exists a manually added transaction that matches the username. We don't want to process the transaction twice.
-                                $transaction = Transaction::where('debtor', $username)
-                                    ->where('creditor', 'zeus')
+                                $transaction = Transaction::where('creditor', $username)
+                                    ->where('debtor', 'zeus')
                                     ->where('transaction_id', null)
                                     ->where('amount', $bankTransaction["transactionAmount"]["amount"])
                                     ->where('cash', false)
