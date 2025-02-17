@@ -22,7 +22,7 @@ class TabService
             'transaction' => [
                 'debtor' => $debtor,
                 'creditor' => $creditor,
-                'cents' => (int) (floatval($amount) * 100),
+                'cents' => round(floatval($amount) * 100),
                 'message' => $message,
             ],
         ]);
