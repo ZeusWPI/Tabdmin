@@ -19,7 +19,7 @@ class ReconnectBankMail extends Mailable
      */
     public function __construct()
     {
-        $this->url = route('connectBank');
+        $this->url = route('bankAccounts');
     }
 
     /**
