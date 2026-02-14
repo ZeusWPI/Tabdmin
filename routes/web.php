@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BankAccountController;
 use App\Http\Controllers\CheckPaymentsController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\IbanUsernameController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
@@ -38,3 +39,8 @@ Route::get('/bankAccounts', [BankAccountController::class, 'index'])->name('bank
 Route::get('/bankAccounts/connect/callback', [BankAccountController::class, 'callback'])->name('bankConnectCallback')->middleware(['auth', 'admin']);
 Route::get('/bankAccounts/connect/{id}', [BankAccountController::class, 'connect'])->middleware(['auth', 'admin']);
 Route::delete('/bankAccounts/{id}', [BankAccountController::class, 'destroy'])->middleware(['auth', 'admin']);
+
+// IBAN-Username
+Route::get('/iban-usernames', [IbanUsernameController::class, 'index'])->name('ibanUsernames')->middleware(['auth', 'admin']);
+Route::post('/iban-usernames', [IbanUsernameController::class, 'store'])->middleware(['auth', 'admin']);
+Route::delete('/iban-usernames/{ibanUsername}', [IbanUsernameController::class, 'destroy'])->middleware(['auth', 'admin']);

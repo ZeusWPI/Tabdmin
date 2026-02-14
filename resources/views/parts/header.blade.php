@@ -2,4 +2,4 @@
          login="{{ route('login') }}" username="{{ optional(Auth::user())->name ?: null }}"
          logout="{{ route('logout') }}" csrf="{{ @csrf_token() }}" welcome="{{ route('welcome') }}"
          home="{{ route('home') }}" transactions="{{ route('transactions') }}"
-         bank-accounts="{{ route('bankAccounts') }}"></nav-bar>
+         bank-accounts="{{ route('bankAccounts') }}" iban-usernames="{{ route('ibanUsernames') }}"></nav-bar>

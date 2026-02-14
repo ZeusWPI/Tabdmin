@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\IbanUsername;
 use App\Models\Transaction;
 use App\Services\NordigenService;
 use App\Services\TabService;
@@ -38,6 +39,12 @@ class CheckPaymentsController extends Controller
                             // Check if the transaction is already in the database.
                             // If it is, we don't want to process it again.
                             if (!Transaction::where('transaction_id', $bankTransaction["transactionId"])->exists()) {
+                                // Check if there exists a IBAN-Username pair for the transaction's IBAN. If so, overwrite the username with the one registered for the IBAN.
+                                $ibanUsername = IbanUsername::where('iban', $bankTransaction["debtorAccount"]["iban"])->first();
+                                if ($ibanUsername) {
+                                    $username = $ibanUsername->username;
+                                }
+
                                 // If not, check if there exists a manually added transaction that matches the username. We don't want to process the transaction twice.
                                 $transaction = Transaction::where('creditor', $username)
                                     ->where('debtor', 'zeus')
