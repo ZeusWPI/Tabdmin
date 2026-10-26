@@ -1,4 +1,4 @@
-FROM php:8.3-fpm
+FROM docker.io/php:8.3-fpm
 
 # Copy composer.lock and composer.json
 COPY composer.lock composer.json /var/tabdmin/
@@ -21,13 +21,12 @@ RUN apt-get update && apt-get install -y \
     unzip \
     git \
     curl \
-    software-properties-common \
     npm
 
 # Install npm
-RUN npm install npm@latest -g && \
-    npm install n -g && \
-    n latest
+RUN npm install n -g && \
+    n latest && \
+    npm install npm@latest -g
 
 # Clear cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
