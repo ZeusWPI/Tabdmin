@@ -25,6 +25,7 @@
 6. Set up the cronjob to run `php artisan schedule:run` every minute in the root of the project, therefore `crontab.example` can be used as a starting point
 
 Instead of step 2, 3 and 5, the Dockerfile can be used to build a Docker image.
+The `.env` file is not copied into the image, so provide it at runtime, e.g. with `--env-file .env` or by mounting it with `-v ./.env:/var/tabdmin/.env:ro`.
 
 
 ### Development

@@ -1,0 +1,35 @@
+# VCS and editor files
+.git
+.idea
+.vscode
+.fleet
+
+# Dependencies and build output (installed/built inside the image)
+node_modules
+vendor
+public/build
+public/hot
+public/storage
+
+# Secrets and local environment
+.env
+.env.*
+!.env.example
+auth.json
+storage/*.key
+
+# Runtime state (keep the directory structure)
+storage/logs/*
+storage/framework/cache/data/*
+storage/framework/sessions/*
+storage/framework/testing/*
+storage/framework/views/*
+bootstrap/cache/*
+!storage/**/.gitignore
+!bootstrap/cache/.gitignore
+
+# Misc
+.phpunit.cache
+.phpunit.result.cache
+npm-debug.log
+yarn-error.log

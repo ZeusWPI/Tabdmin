@@ -1,4 +1,4 @@
-FROM docker.io/php:8.3-fpm
+FROM docker.io/php:8.3-fpm-trixie
 
 # Copy composer.lock and composer.json
 COPY composer.lock composer.json /var/tabdmin/
@@ -25,7 +25,7 @@ RUN apt-get update && apt-get install -y \
 
 # Install npm
 RUN npm install n -g && \
-    n latest && \
+    n 24 && \
     npm install npm@latest -g
 
 # Clear cache
